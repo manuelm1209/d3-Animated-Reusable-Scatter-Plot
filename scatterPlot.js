@@ -28,11 +28,16 @@ export const scatterPlot = () => {
             y: y(yValue(d)),
         }));
 
+        // Transition instance
+        const t = d3.transition()
+        .duration(1500)
+        // .ease(d3.easeLinear);
+
         selection
             .selectAll('circle')
             .data(marks)
             .join('circle')
-            .transition()
+            .transition(t)
             .attr('cx', d => d.x)
             .attr('cy', d => d.y)
             .attr('r', 5);
