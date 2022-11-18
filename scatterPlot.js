@@ -43,33 +43,11 @@ export const scatterPlot = () => {
                     .attr('r', 0)
                     .call(enter => enter.transition(t).attr('r', 5)),
                 update => update
-                    .attr('cx', d => d.x)
-                    .attr('cy', d => d.y),
+                    .call(enter => enter.transition(t).delay((d, i) => i * 10).attr('cx', d => d.x).attr('cy', d => d.y)),   
+                    
                 exit => exit.remove()
 
             )
-
-            // Animation example from https://observablehq.com/@d3/selection-join
-            //
-            // .join(
-            //     enter => enter.append("text")
-            //         .attr("fill", "green")
-            //         .attr("x", (d, i) => i * 16)
-            //         .attr("y", -30)
-            //         .text(d => d)
-            //       .call(enter => enter.transition(t)
-            //         .attr("y", 0)),
-            //     update => update
-            //         .attr("fill", "black")
-            //         .attr("y", 0)
-            //       .call(update => update.transition(t)
-            //         .attr("x", (d, i) => i * 16)),
-            //     exit => exit
-            //         .attr("fill", "brown")
-            //       .call(exit => exit.transition(t)
-            //         .attr("y", 30)
-            //         .remove())
-
 
         // Left axis
         selection
@@ -78,6 +56,7 @@ export const scatterPlot = () => {
             .join('g')
             .attr('class', 'y-axis')
             .attr('transform', `translate(${margin.left},0)`)
+            .transition(t)
             .call(d3.axisLeft(y));
 
         // Bottom axis
@@ -87,6 +66,7 @@ export const scatterPlot = () => {
             .join('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(0, ${height - margin.bottom})`)
+            .transition(t)
             .call(d3.axisBottom(x));
     };
 

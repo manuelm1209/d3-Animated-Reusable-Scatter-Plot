@@ -52,7 +52,7 @@ const main = async () => {
         plot.xValue((d) => d[columns[i % columns.length]])
         svg.call(plot);
         i++;
-    }, 2000);
+    }, 4000);
 
 
 };
