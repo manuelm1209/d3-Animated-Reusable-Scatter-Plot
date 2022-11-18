@@ -28,18 +28,11 @@ export const scatterPlot = () => {
             y: y(yValue(d)),
         }));
 
-        console.log(x.domain());
-        console.log(y.domain());
-
-        console.log(x.range());
-        console.log(y.range());
-
-        console.log(marks);
-
         selection
             .selectAll('circle')
             .data(marks)
             .join('circle')
+            .transition()
             .attr('cx', d => d.x)
             .attr('cy', d => d.y)
             .attr('r', 5);
