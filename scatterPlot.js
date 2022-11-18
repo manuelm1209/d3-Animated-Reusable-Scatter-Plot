@@ -36,11 +36,40 @@ export const scatterPlot = () => {
         selection
             .selectAll('circle')
             .data(marks)
-            .join('circle')
-            .transition(t)
-            .attr('cx', d => d.x)
-            .attr('cy', d => d.y)
-            .attr('r', 5);
+            .join(
+                enter => enter.append('circle')
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y)
+                    .attr('r', 0)
+                    .call(enter => enter.transition(t).attr('r', 5)),
+                update => update
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y),
+                exit => exit.remove()
+
+            )
+
+            // Animation example from https://observablehq.com/@d3/selection-join
+            //
+            // .join(
+            //     enter => enter.append("text")
+            //         .attr("fill", "green")
+            //         .attr("x", (d, i) => i * 16)
+            //         .attr("y", -30)
+            //         .text(d => d)
+            //       .call(enter => enter.transition(t)
+            //         .attr("y", 0)),
+            //     update => update
+            //         .attr("fill", "black")
+            //         .attr("y", 0)
+            //       .call(update => update.transition(t)
+            //         .attr("x", (d, i) => i * 16)),
+            //     exit => exit
+            //         .attr("fill", "brown")
+            //       .call(exit => exit.transition(t)
+            //         .attr("y", 30)
+            //         .remove())
+
 
         // Left axis
         selection
